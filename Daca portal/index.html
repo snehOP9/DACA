@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DACA - Chandigarh University</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="notification" id="notification"></div>
+  <div class="login-page" id="user-login">
+    <div class="login-box">
+      <h2>User Login</h2>
+      <input type="text" id="user-username" placeholder="Username" required />
+      <input type="password" id="user-password" placeholder="Password" required />
+      <button onclick="login('user')">Login</button>
+      <p>
+        Not registered? <a href="#" onclick="showSection('dashboard')">Go to Home</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="login-page" id="admin-login">
+    <div class="login-box">
+      <h2>Admin Login</h2>
+      <input type="text" id="admin-username" placeholder="Username" required />
+      <input type="password" id="admin-password" placeholder="Password" required />
+      <button onclick="login('admin')">Login</button>
+      <p>
+        Back to
+        <a href="#" onclick="showSection('dashboard')">Home</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="sidebar">
+      <h2>DACA</h2>
+      <a href="#dashboard" class="active" data-section="dashboard"
+        ><i class="fas fa-home"></i><span>Dashboard</span></a
+      >
+      <a href="#events" data-section="events"
+        ><i class="fas fa-calendar-alt"></i><span>Events</span></a
+      >
+      <a href="#resources" data-section="resources"
+        ><i class="fas fa-tools"></i><span>Resources</span></a
+      >
+      <a href="#participation" data-section="participation"
+        ><i class="fas fa-users"></i><span>Participation</span></a
+      >
+      <a href="#venue" data-section="venue"
+        ><i class="fas fa-building"></i><span>Venue Booking</span></a
+      >
+      <a href="#reports" data-section="reports"
+        ><i class="fas fa-chart-pie"></i><span>Reports</span></a
+      >
+      <a href="#" onclick="logout()"
+        ><i class="fas fa-sign-out-alt"></i><span>Logout</span></a
+      >
+    </div>
+    <div class="main-content">
+      <div class="header">
+        <h1>Department of Academic and Cultural Affairs</h1>
+        <div class="header-controls">
+          <button class="theme-toggle" onclick="toggleTheme()">
+            <i class="fas fa-moon"></i>
+          </button>
+          <div class="user-profile">
+            <span id="user-name">Guest</span>
+            <img src="https://via.placeholder.com/45" alt="User" />
+          </div>
+        </div>
+      </div>
+
+      <div class="content-section active" id="dashboard">
+        <div class="dashboard-grid">
+          <div class="card">
+            <h3>Upcoming Events</h3>
+            <div class="filter-container">
+              <select onchange="filterEvents(this.value)">
+                <option value="all">All Categories</option>
+                <option value="cultural">Cultural</option>
+                <option value="artistic">Artistic</option>
+                <option value="educational">Educational</option>
+              </select>
+            </div>
+            <ul id="event-list">
+              <li data-category="cultural">
+                Annual Music Festival - Apr 15, 2025 - Main Auditorium
+              </li>
+              <li data-category="artistic">
+                Art Exhibition - Apr 20, 2025 - Art Gallery
+              </li>
+              <li data-category="educational">
+                Debate Competition - Apr 25, 2025 - Conference Hall
+              </li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Venue Status</h3>
+            <ul>
+              <li>Main Auditorium - Available</li>
+              <li>Art Gallery - Booked (Apr 20)</li>
+              <li>Conference Hall - Available</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Join an Event</h3>
+            <div class="form-container">
+              <form id="participation-form">
+                <input type="text" placeholder="Your Name" required />
+                <select required>
+                  <option value="">Select Role</option>
+                  <option value="participant">Participant</option>
+                  <option value="volunteer">Volunteer</option>
+                  <option value="organizer">Organizer</option>
+                </select>
+                <select required>
+                  <option value="">Select Event</option>
+                  <option value="music">Annual Music Festival</option>
+                  <option value="art">Art Exhibition</option>
+                  <option value="debate">Debate Competition</option>
+                </select>
+                <button type="submit">Register</button>
+              </form>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Quick Links</h3>
+            <ul>
+              <li><a href="#" onclick="showLogin('user')">User Login</a></li>
+              <li><a href="#" onclick="showLogin('admin')">Admin Login</a></li>
+              <li><a href="#events">Manage Events</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="content-section" id="events">
+        <div class="card">
+          <h3>Manage Events</h3>
+          <div class="form-container">
+            <form id="event-form">
+              <input type="text" placeholder="Event Name" required />
+              <input type="date" required />
+              <select required>
+                <option value="">Select Venue</option>
+                <option value="auditorium">Main Auditorium</option>
+                <option value="gallery">Art Gallery</option>
+                <option value="hall">Conference Hall</option>
+              </select>
+              <select required>
+                <option value="">Select Category</option>
+                <option value="cultural">Cultural</option>
+                <option value="artistic">Artistic</option>
+                <option value="educational">Educational</option>
+                <option value="social">Social Awareness</option>
+              </select>
+              <textarea placeholder="Event Description" rows="4" required></textarea>
+              <button type="submit">Add Event</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="content-section" id="resources">
+        <div class="card">
+          <h3>Allocate Resources</h3>
+          <div class="form-container">
+            <form id="resource-form">
+              <select required>
+                <option value="">Select Resource</option>
+                <option value="funds">Funds (₹50,000 available)</option>
+                <option value="sound">Sound Equipment (5 units)</option>
+                <option value="lighting">Lighting (10 units)</option>
+              </select>
+              <input type="number" placeholder="Quantity" min="1" required />
+              <input type="text" placeholder="Event Name" required />
+              <button type="submit">Allocate</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="content-section" id="participation">
+        <div class="card">
+          <h3>Student Participation</h3>
+          <div class="filter-container">
+            <select onchange="filterParticipation(this.value)">
+              <option value="all">All Roles</option>
+              <option value="participant">Participants</option>
+              <option value="volunteer">Volunteers</option>
+              <option value="organizer">Organizers</option>
+            </select>
+          </div>
+          <div class="table-container">
+            <table id="participation-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Role</th>
+                  <th>Event</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-role="volunteer">
+                  <td>Rahul Sharma</td>
+                  <td>Volunteer</td>
+                  <td>Music Festival</td>
+                  <td>Confirmed</td>
+                  <td>
+                    <button onclick="updateStatus(this, 'Pending')">Revert</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-section" id="venue">
+        <div class="card">
+          <h3>Book a Venue</h3>
+          <div class="form-container">
+            <form id="venue-form">
+              <select required>
+                <option value="">Select Venue</option>
+                <option value="auditorium">Main Auditorium</option>
+                <option value="gallery">Art Gallery</option>
+                <option value="hall">Conference Hall</option>
+              </select>
+              <input type="date" required />
+              <input type="time" required />
+              <input type="text" placeholder="Event Name" required />
+              <button type="submit">Book Venue</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-section" id="reports">
+        <div class="card">
+          <h3>Event Reports</h3>
+          <div class="chart-container">
+            <canvas id="eventChart"></canvas>
+          </div>
+
+          <div class="chart-container">
+            <canvas id="attendanceChart"></canvas>
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Event Name</th>
+                  <th>Date</th>
+                  <th>Attendance</th>
+                  <th>Resources Used</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Drama Fest 2024</td>
+                  <td>Mar 10, 2025</td>
+                  <td>200</td>
+                  <td>₹20,000, 3 Sound Units</td>
+                </tr>
+                <tr>
+                  <td>Dance Competition</td>
+                  <td>Mar 25, 2025</td>
+                  <td>150</td>
+                  <td>₹15,000, 5 Lights</td>
+                </tr>
+                <tr>
+                  <td>Music Festival</td>
+                  <td>Apr 15, 2025</td>
+                  <td>300</td>
+                  <td>₹30,000, 4 Sound Units</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
